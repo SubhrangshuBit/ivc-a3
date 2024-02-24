@@ -18,7 +18,7 @@ def load_obj_each_frame(data_file: str) -> dict:
     frame_dict = json.load(file)
   return frame_dict
 
-def draw_target_object_center(video_file: str, obj_centers: dict):
+def draw_target_object_center(video_file: str, obj_centers: dict, output_file: str = "part_1_demo.mp4"):
   """Draws the track of the object using the object centers
 
   Args:
@@ -29,7 +29,7 @@ def draw_target_object_center(video_file: str, obj_centers: dict):
   cap = cv.VideoCapture(video_file)
   frames = []
   ok, image = cap.read()
-  vidwrite = cv.VideoWriter("part_1_demo.mp4", cv.VideoWriter_fourcc('m', 'p', '4', 'v'), 30, (700,500))
+  vidwrite = cv.VideoWriter(output_file, cv.VideoWriter_fourcc('m', 'p', '4', 'v'), 30, (700,500))
   while ok:
     pos_x,pos_y = obj_centers[count]
     count+=1
