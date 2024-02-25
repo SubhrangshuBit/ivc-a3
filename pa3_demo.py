@@ -58,12 +58,12 @@ def draw_object(object_dict,image,color = (0, 255, 0), thickness = 2,c_color= \
   image = cv.rectangle(image, (x, y), (x + width, y + height), color, thickness)
   return image
 
-def draw_objects_in_video(video_file,frame_dict):
+def draw_objects_in_video(video_file,frame_dict, output_file = "part_2_demo.mp4"):
   count = 0
   cap = cv.VideoCapture(video_file)
   frames = []
   ok, image = cap.read()
-  vidwrite = cv.VideoWriter("part_2_demo.mp4", cv.VideoWriter_fourcc(*'MP4V'), 30, (700,500))
+  vidwrite = cv.VideoWriter(output_file, cv.VideoWriter_fourcc(*'MP4V'), 30, (700,500))
   while ok:
     ######!!!!#######
     image = cv.resize(image, (700, 500)) # make sure your video is resize to this size, otherwise the coords in the data file won't work !!!
