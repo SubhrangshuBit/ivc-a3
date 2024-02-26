@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 import cv2 as cv
-# from google.colab.patches import cv2_imshow
+import numpy as np
 
 # part 1:
 
@@ -30,6 +30,7 @@ def draw_target_object_center(video_file: str, obj_centers: dict, output_file: s
   frames = []
   ok, image = cap.read()
   vidwrite = cv.VideoWriter(output_file, cv.VideoWriter_fourcc('m', 'p', '4', 'v'), 30, (700,500))
+  estimated_points = np.array(obj_centers).astype(int)
   while ok:
     pos_x,pos_y = obj_centers[count]
     count+=1
@@ -37,6 +38,7 @@ def draw_target_object_center(video_file: str, obj_centers: dict, output_file: s
     image = cv.resize(image, (700, 500)) # make sure your video is resize to this size, otherwise the coords in the data file won't work !!!
     ######!!!!#######
     image = cv.circle(image, (int(pos_x),int(pos_y)), 1, (0,0,255), 2)
+    image = cv.polylines(image, [estimated_points], isClosed=False, color=(255, 0, 0), thickness=2)
     vidwrite.write(image)
     ok, image = cap.read()
   vidwrite.release()
